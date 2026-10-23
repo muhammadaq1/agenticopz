@@ -145,8 +145,43 @@ const panelTransition = { type: 'spring', stiffness: 170, damping: 24 }
       <span class="font-mono text-[13px] text-ink-faint tabular-nums">{{ timerText }}</span>
     </div>
 
-    <!-- stage: FIXED height; panels absolutely stacked -->
-    <div class="relative h-[548px] min-[480px]:h-[508px] sm:h-[492px]">
+    <!-- Stage height: an invisible in-flow sizer mirrors the tallest
+         state (the finished call) at the current viewport width, so the
+         card is always exactly tall enough — the animated panels stack
+         absolutely on top of it and can never overflow or overlap,
+         on any screen size. -->
+    <div class="relative">
+      <div class="invisible" aria-hidden="true">
+        <div class="pt-4">
+          <div class="flex items-center gap-[13px] rounded-2xl px-4 py-[13px]">
+            <span class="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full"></span>
+            <div class="min-w-0">
+              <p class="truncate text-[15.5px] font-semibold leading-[1.3]"><span class="hidden min-[480px]:inline">Incoming call — </span>(214) 555-0147</p>
+              <p class="mt-[1px] text-[12.5px] leading-[1.35]">Richmond’s Air · Dallas, TX</p>
+            </div>
+            <span class="ml-auto hidden shrink-0 px-[10px] py-[5px] font-mono text-[10px] font-medium tracking-[0.14em] min-[420px]:inline-block">INCOMING</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-[13px] pt-[18px]">
+          <div v-for="(line, i) in LINES" :key="'sizer-' + i" class="flex gap-3 text-[15px] leading-[1.55]">
+            <span class="mt-[2px] h-fit shrink-0 rounded-[5px] px-[7px] py-[3px] font-mono text-[10.5px] font-medium tracking-[0.1em]">{{ line.who === 'ai' ? 'AI' : 'CALLER' }}</span>
+            <p>{{ line.text }}</p>
+          </div>
+        </div>
+        <div>
+          <div class="min-h-[38px] border-t border-dashed pt-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full border px-3 py-[6px] text-[13.5px] font-semibold">&#10003; Appointment booked — Today, 2:00–4:00 PM</span>
+              <span class="rounded-full border px-3 py-[6px] text-[13.5px] font-semibold">&#10003; Summary texted to owner</span>
+            </div>
+          </div>
+          <div class="flex h-[42px] items-center gap-[10px] pt-2">
+            <span class="inline-flex items-center px-[18px] py-[9px] text-sm font-semibold">End call</span>
+          </div>
+        </div>
+        <div class="h-[10px]"></div>
+      </div>
+
       <AnimatePresence mode="wait" :initial="false">
         <!-- ===== idle / connecting panel ===== -->
         <motion.div
@@ -159,6 +194,7 @@ const panelTransition = { type: 'spring', stiffness: 170, damping: 24 }
           :transition="panelTransition"
         >
           <motion.button
+            id="playBtn"
             type="button"
             class="relative grid h-[84px] w-[84px] place-items-center rounded-full border-none text-cream shadow-[0_18px_36px_-12px_rgba(255,90,31,0.55)] transition-colors duration-300"
             :class="state === 'connecting' ? 'bg-ink shadow-[0_18px_36px_-14px_rgba(20,21,15,0.5)]' : 'bg-accent cursor-pointer'"
@@ -226,7 +262,7 @@ const panelTransition = { type: 'spring', stiffness: 170, damping: 24 }
                 <svg class="h-5 w-5 text-accent" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z" fill="currentColor"/></svg>
               </span>
               <div class="min-w-0">
-                <p class="truncate text-[15.5px] font-semibold leading-[1.3]">Incoming call — (214) 555-0147</p>
+                <p class="truncate text-[15.5px] font-semibold leading-[1.3]"><span class="hidden min-[480px]:inline">Incoming call — </span>(214) 555-0147</p>
                 <p class="mt-[1px] text-[12.5px] leading-[1.35] text-white/55">Richmond’s Air · Dallas, TX</p>
               </div>
               <span class="ml-auto hidden shrink-0 rounded-full bg-white/10 px-[10px] py-[5px] font-mono text-[10px] font-medium tracking-[0.14em] text-white/75 ring-1 ring-white/10 min-[420px]:inline-block">INCOMING</span>

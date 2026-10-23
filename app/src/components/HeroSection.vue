@@ -21,15 +21,15 @@ const fadeUp = (delay) => ({
 
 <template>
   <section class="dot-grid border-b border-line">
-    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 pb-[84px] pt-[84px] sm:px-7 min-[961px]:grid-cols-[1.08fr_0.92fr] min-[961px]:gap-16">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-14 sm:px-7 min-[961px]:grid-cols-[1.08fr_0.92fr] min-[961px]:gap-16">
       <div>
         <motion.p v-bind="fadeUp(0)" class="mb-[26px] flex items-center gap-3 font-mono text-[12.5px] font-medium uppercase tracking-[0.18em] text-ink-faint">
           <span class="inline-block h-px w-[34px] bg-accent"></span>AI FRONT DESK FOR HOME SERVICES
         </motion.p>
-        <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(46px,5.9vw,82px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
+        <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(42px,4.4vw,66px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
           Every call answered.<br><em class="not-italic text-accent">Every job booked.</em>
         </motion.h1>
-        <motion.p v-bind="fadeUp(0.16)" class="mt-7 max-w-[540px] text-[19px] leading-[1.62] text-ink-soft">
+        <motion.p v-bind="fadeUp(0.16)" class="mt-6 max-w-[520px] text-[17.5px] leading-[1.6] text-ink-soft">
           An AI receptionist for HVAC, plumbing, roofing and electrical shops. It answers on the first ring — nights, weekends, mid-job — books the work into your calendar, and texts you the details.
         </motion.p>
         <motion.div v-bind="fadeUp(0.24)" class="mt-[38px] flex flex-wrap gap-[14px]">
@@ -61,8 +61,8 @@ const fadeUp = (delay) => ({
         :transition="{ type: 'spring', stiffness: 70, damping: 19, mass: 1, delay: 0.18 }"
       >
         <!-- warm light field behind the glass card (decorative) -->
-        <div class="pointer-events-none absolute -right-10 -top-12 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(255,90,31,0.30),rgba(255,150,60,0.10),transparent)] blur-2xl" aria-hidden="true"></div>
-        <div class="pointer-events-none absolute -bottom-14 -left-12 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(20,21,15,0.13),transparent)] blur-2xl" aria-hidden="true"></div>
+        <div class="pointer-events-none absolute right-0 -top-10 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(255,90,31,0.30),rgba(255,150,60,0.10),transparent)] blur-2xl" aria-hidden="true"></div>
+        <div class="pointer-events-none absolute -bottom-10 left-0 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(20,21,15,0.13),transparent)] blur-2xl" aria-hidden="true"></div>
         <div class="relative">
           <CallPlayer ref="player" />
         </div>
