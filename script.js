@@ -1,4 +1,4 @@
-// Agentic Obes — small interactions, no framework.
+// AgenticOpz — small interactions, no framework.
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
