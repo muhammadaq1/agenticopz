@@ -23,8 +23,10 @@ const fadeUp = (delay) => ({
   <section class="dot-grid border-b border-line">
     <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-14 sm:px-7 min-[961px]:grid-cols-[1.08fr_0.92fr] min-[961px]:gap-16">
       <div>
-        <motion.p v-bind="fadeUp(0)" class="mb-[26px] flex items-center gap-3 font-mono text-[12.5px] font-medium uppercase tracking-[0.18em] text-ink-faint">
-          <span class="inline-block h-px w-[34px] bg-accent"></span>AI FRONT DESK FOR HOME SERVICES
+        <motion.p v-bind="fadeUp(0)" class="mb-[26px]">
+          <span class="inline-flex items-center gap-2.5 rounded-full border border-ink/10 bg-cream/80 py-1.5 pl-3 pr-4 font-mono text-[11.5px] font-medium uppercase tracking-[0.18em] text-ink-soft shadow-[0_1px_2px_rgba(20,21,15,0.05)]">
+            <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>AI Front Desk
+          </span>
         </motion.p>
         <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(42px,4.4vw,66px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
           Every call answered.<br><em class="not-italic text-accent">Every job booked.</em>
