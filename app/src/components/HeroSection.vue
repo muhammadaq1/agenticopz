@@ -55,11 +55,17 @@ const fadeUp = (delay) => ({
       </div>
 
       <motion.div
+        class="relative"
         :initial="{ opacity: 0, y: 30, scale: 0.985 }"
         :animate="{ opacity: 1, y: 0, scale: 1 }"
         :transition="{ type: 'spring', stiffness: 70, damping: 19, mass: 1, delay: 0.18 }"
       >
-        <CallPlayer ref="player" />
+        <!-- warm light field behind the glass card (decorative) -->
+        <div class="pointer-events-none absolute -right-10 -top-12 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(255,90,31,0.30),rgba(255,150,60,0.10),transparent)] blur-2xl" aria-hidden="true"></div>
+        <div class="pointer-events-none absolute -bottom-14 -left-12 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(20,21,15,0.13),transparent)] blur-2xl" aria-hidden="true"></div>
+        <div class="relative">
+          <CallPlayer ref="player" />
+        </div>
       </motion.div>
     </div>
 

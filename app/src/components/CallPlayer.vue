@@ -116,10 +116,10 @@ const panelTransition = { type: 'spring', stiffness: 170, damping: 24 }
 <template>
   <div
     id="demo"
-    class="rounded-[18px] border border-line bg-cream p-5 shadow-[0_24px_60px_-28px_rgba(20,21,15,0.28)] sm:p-[26px] sm:pb-5"
+    class="rounded-[22px] border border-white/60 bg-[linear-gradient(140deg,rgba(255,253,249,0.82),rgba(255,253,249,0.45)_55%,rgba(255,246,238,0.55))] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(20,21,15,0.04),0_30px_70px_-24px_rgba(20,21,15,0.38)] ring-1 ring-ink/[0.05] backdrop-blur-[18px] backdrop-saturate-150 sm:p-[26px] sm:pb-5"
   >
     <!-- header: status + timer (fixed height, never shifts) -->
-    <div class="flex items-center justify-between border-b border-line pb-4">
+    <div class="flex items-center justify-between border-b border-ink/[0.08] pb-4">
       <span
         class="inline-flex items-center gap-[9px] font-mono text-xs font-medium tracking-[0.14em] transition-colors duration-300"
         :class="statusColor"
@@ -221,8 +221,16 @@ const panelTransition = { type: 'spring', stiffness: 170, damping: 24 }
           :transition="panelTransition"
         >
           <div class="pt-4">
-            <p class="text-base font-semibold">Incoming call — (214) 555-0147</p>
-            <p class="text-[14.5px] text-ink-faint">Richmond’s Air · Dallas, TX</p>
+            <div class="flex items-center gap-[13px] rounded-2xl bg-[linear-gradient(120deg,#171812,#26281d)] px-4 py-[13px] text-cream shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_14px_28px_-14px_rgba(20,21,15,0.55)] ring-1 ring-white/10">
+              <span class="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full bg-white/10 ring-1 ring-white/15" aria-hidden="true">
+                <svg class="h-5 w-5 text-accent" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z" fill="currentColor"/></svg>
+              </span>
+              <div class="min-w-0">
+                <p class="truncate text-[15.5px] font-semibold leading-[1.3]">Incoming call — (214) 555-0147</p>
+                <p class="mt-[1px] text-[12.5px] leading-[1.35] text-white/55">Richmond’s Air · Dallas, TX</p>
+              </div>
+              <span class="ml-auto hidden shrink-0 rounded-full bg-white/10 px-[10px] py-[5px] font-mono text-[10px] font-medium tracking-[0.14em] text-white/75 ring-1 ring-white/10 min-[420px]:inline-block">INCOMING</span>
+            </div>
           </div>
 
           <div class="flex flex-col gap-[13px] pt-[18px]">
@@ -246,7 +254,7 @@ const panelTransition = { type: 'spring', stiffness: 170, damping: 24 }
 
           <!-- outcome + controls pinned to the bottom of the fixed stage -->
           <div class="mt-auto">
-            <div class="min-h-[38px] border-t border-dashed border-line pt-4">
+            <div class="min-h-[38px] border-t border-dashed border-ink/[0.12] pt-4">
               <AnimatePresence :initial="false">
                 <div v-if="showOutcome" key="outcome" class="flex flex-wrap gap-2">
                   <motion.span
