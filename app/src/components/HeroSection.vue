@@ -1,0 +1,75 @@
+<script setup>
+import { ref } from 'vue'
+import { motion } from 'motion-v'
+import CallPlayer from './CallPlayer.vue'
+
+const player = ref(null)
+
+function hearSample() {
+  // The anchor scrolls to the card; start playback just after.
+  setTimeout(() => player.value && player.value.play(), 500)
+}
+
+const trades = ['HVAC', 'Plumbing', 'Roofing', 'Electrical', 'Garage Doors', 'Appliance Repair']
+
+const fadeUp = (delay) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { type: 'spring', stiffness: 80, damping: 19, mass: 0.9, delay },
+})
+</script>
+
+<template>
+  <section class="dot-grid border-b border-line">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 pb-[84px] pt-[84px] sm:px-7 min-[961px]:grid-cols-[1.08fr_0.92fr] min-[961px]:gap-16">
+      <div>
+        <motion.p v-bind="fadeUp(0)" class="mb-[26px] flex items-center gap-3 font-mono text-[12.5px] font-medium uppercase tracking-[0.18em] text-ink-faint">
+          <span class="inline-block h-px w-[34px] bg-accent"></span>AI FRONT DESK FOR HOME SERVICES
+        </motion.p>
+        <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(46px,5.9vw,82px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
+          Every call answered.<br><em class="not-italic text-accent">Every job booked.</em>
+        </motion.h1>
+        <motion.p v-bind="fadeUp(0.16)" class="mt-7 max-w-[540px] text-[19px] leading-[1.62] text-ink-soft">
+          An AI receptionist for HVAC, plumbing, roofing and electrical shops. It answers on the first ring — nights, weekends, mid-job — books the work into your calendar, and texts you the details.
+        </motion.p>
+        <motion.div v-bind="fadeUp(0.24)" class="mt-[38px] flex flex-wrap gap-[14px]">
+          <motion.a
+            href="#audit"
+            class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-[15px] text-base font-semibold text-cream no-underline shadow-[0_12px_26px_-12px_rgba(255,90,31,0.55)] transition-colors hover:bg-accent-dark"
+            :whileHover="{ scale: 1.03 }"
+            :whileTap="{ scale: 0.97 }"
+            :transition="{ type: 'spring', stiffness: 400, damping: 22 }"
+          >Get your free Missed-Call Audit</motion.a>
+          <motion.a
+            href="#demo"
+            class="inline-flex items-center gap-2 rounded-full border border-ink bg-transparent px-7 py-[15px] text-base font-semibold text-ink no-underline transition-colors hover:bg-ink hover:text-cream"
+            :whileHover="{ scale: 1.03 }"
+            :whileTap="{ scale: 0.97 }"
+            :transition="{ type: 'spring', stiffness: 400, damping: 22 }"
+            @click="hearSample"
+          >Hear a sample call</motion.a>
+        </motion.div>
+        <motion.p v-bind="fadeUp(0.32)" class="mt-5 max-w-[460px] text-[14.5px] text-ink-faint">
+          Free audit: we test-call your business and show you exactly what your callers experience today.
+        </motion.p>
+      </div>
+
+      <motion.div
+        :initial="{ opacity: 0, y: 30, scale: 0.985 }"
+        :animate="{ opacity: 1, y: 0, scale: 1 }"
+        :transition="{ type: 'spring', stiffness: 70, damping: 19, mass: 1, delay: 0.18 }"
+      >
+        <CallPlayer ref="player" />
+      </motion.div>
+    </div>
+
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-7">
+      <div class="flex flex-wrap items-center gap-[22px] border-t border-line py-[22px] pb-[26px] font-mono text-[12.5px] tracking-[0.16em] text-ink-faint" aria-label="Trades we serve">
+        <template v-for="(t, i) in trades" :key="t">
+          <span>{{ t.toUpperCase() }}</span>
+          <i v-if="i < trades.length - 1" class="inline-block h-1 w-1 rounded-full bg-accent"></i>
+        </template>
+      </div>
+    </div>
+  </section>
+</template>
