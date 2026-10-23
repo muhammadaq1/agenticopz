@@ -35,35 +35,64 @@
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow"><span class="eyebrow-rule"></span>AI FRONT DESK FOR HOME SERVICES</p>
-        <h1>Your crew is on a roof.<br>Who&rsquo;s answering<br>the <em>phone?</em></h1>
-        <p class="hero-sub">We build an AI receptionist for HVAC, plumbing, roofing and electrical companies. It answers on the first ring — nights, weekends, mid-job — books the work into your calendar, and texts you the details. No voicemail. No missed jobs.</p>
+        <h1>Every call answered.<br><em>Every job booked.</em></h1>
+        <p class="hero-sub">An AI receptionist for HVAC, plumbing, roofing and electrical shops. It answers on the first ring — nights, weekends, mid-job — books the work into your calendar, and texts you the details.</p>
         <div class="hero-ctas">
           <a class="btn btn-accent" href="#audit">Get your free Missed-Call Audit</a>
-          <a class="btn btn-ghost" href="#sample">Hear a sample call <span aria-hidden="true">&darr;</span></a>
+          <a class="btn btn-ghost" href="#demo" data-play-demo>Hear a sample call</a>
         </div>
         <p class="hero-note">Free audit: we test-call your business and show you exactly what your callers experience today.</p>
       </div>
 
-      <div class="call-card" aria-label="Illustration of a live AI-answered call">
+      <!-- ===== Interactive sample-call player ===== -->
+      <div class="call-card" id="demo" data-state="idle">
         <div class="call-card-head">
-          <span class="call-status"><span class="pulse-dot"></span>LIVE CALL</span>
+          <span class="call-status" aria-live="polite">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="callStatusText">SAMPLE CALL</span>
+            <span class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </span>
           <span class="call-timer" id="callTimer">00:00</span>
         </div>
-        <div class="call-meta">
-          <p class="call-caller">Incoming call &mdash; (214) 555-0147</p>
-          <p class="call-biz">Richmond&rsquo;s Air &middot; Dallas, TX</p>
+
+        <!-- Idle / connecting stage -->
+        <div class="call-stage" id="callStage">
+          <button class="play-btn" id="playBtn" type="button" aria-label="Play sample call">
+            <span class="play-rings" aria-hidden="true"><i></i><i></i></span>
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.75v12.5c0 .8.9 1.3 1.6.9l10-6.25c.6-.4.6-1.4 0-1.8l-10-6.25c-.7-.4-1.6.1-1.6.9z" fill="currentColor"/></svg>
+            <svg class="icon icon-phone" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5c.3-.3.8-.4 1.2-.2l1.5.7c.4.2.7.7.6 1.2l-.3 1.9c0 .4.1.8.4 1.1l1.4 1.4c.3.3.7.4 1.1.4l1.9-.3c.5-.1 1 .2 1.2.6l.7 1.5c.2.4.1.9-.2 1.2l-1.1 1.1c-.4.4-.9.5-1.4.4-2.9-.7-5.6-2.2-7.6-4.2C3 8.3 1.5 5.6.8 2.7.7 2.2.9 1.7 1.3 1.3l1.1-1.1c.3-.3.8-.4 1.2-.2l1.5.7c.4.2.7.7.6 1.2L5.4 3.8c0 .4.1.8.4 1.1l1.4 1.4c.3.3.7.4 1.1.4l1.9-.3c.5-.1 1 .2 1.2.6l.7 1.5c.2.4.1.9-.2 1.2l-1.1 1.1" fill="currentColor" transform="translate(3.2 2.4) scale(0.72)"/></svg>
+          </button>
+          <p class="stage-title" id="stageTitle">Hear it work a real call</p>
+          <p class="stage-sub" id="stageSub">Richmond&rsquo;s Air &middot; Dallas, TX<br>AC stopped cooling &middot; weeknight, 9:41 PM</p>
+          <p class="stage-connecting" id="stageConnecting" hidden>Dialing<span class="dial-dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></p>
         </div>
-        <div class="transcript" id="transcript">
-          <div class="line line-ai"><span class="speaker">AI</span><p>Thanks for calling Richmond&rsquo;s Air, this is Ava. How can I help?</p></div>
-          <div class="line line-caller"><span class="speaker">CALLER</span><p>Hi, our AC stopped cooling last night. It&rsquo;s 91 in the house.</p></div>
-          <div class="line line-ai"><span class="speaker">AI</span><p>I&rsquo;m sorry to hear that — let&rsquo;s get someone out today. Are you the homeowner at the address on file?</p></div>
-          <div class="line line-caller"><span class="speaker">CALLER</span><p>Yes. Can someone come this afternoon?</p></div>
-          <div class="line line-ai"><span class="speaker">AI</span><p>We have a technician in your area between 2 and 4 PM. I&rsquo;ve booked that for you — you&rsquo;ll get a text confirmation in a moment.</p></div>
+
+        <!-- Live call -->
+        <div class="call-live" id="callLive" hidden>
+          <div class="call-meta">
+            <p class="call-caller">Incoming call &mdash; (214) 555-0147</p>
+            <p class="call-biz">Richmond&rsquo;s Air &middot; Dallas, TX</p>
+          </div>
+          <div class="transcript" id="transcript">
+            <div class="line line-ai"><span class="speaker">AI</span><p>Thanks for calling Richmond&rsquo;s Air, this is Ava. How can I help?</p></div>
+            <div class="line line-caller"><span class="speaker">CALLER</span><p>Hi, our AC stopped cooling last night. It&rsquo;s 91 in the house.</p></div>
+            <div class="line line-ai"><span class="speaker">AI</span><p>I&rsquo;m sorry to hear that — let&rsquo;s get someone out today. Are you the homeowner at the address on file?</p></div>
+            <div class="line line-caller"><span class="speaker">CALLER</span><p>Yes. Can someone come this afternoon?</p></div>
+            <div class="line line-ai"><span class="speaker">AI</span><p>We have a technician in your area between 2 and 4 PM. I&rsquo;ve booked that for you — you&rsquo;ll get a text confirmation in a moment.</p></div>
+          </div>
+          <div class="call-outcome" id="callOutcome">
+            <span class="outcome-chip">&#10003; Appointment booked — Today, 2:00–4:00 PM</span>
+            <span class="outcome-chip outcome-chip-alt">&#10003; Summary texted to owner</span>
+          </div>
+          <div class="call-controls">
+            <button class="end-btn" id="endBtn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 13.2c-3 0-6.1.8-8.6 2.3-.5.3-.7.9-.5 1.4l.9 2c.2.5.8.8 1.3.6 1.2-.4 2.3-1 3.3-1.7.4-.3.6-.8.5-1.3l-.4-1.7c1.3.3 2.8.5 4.5.5s3.2-.2 4.5-.5l-.4 1.7c-.1.5.1 1 .5 1.3 1 .7 2.1 1.3 3.3 1.7.5.2 1.1-.1 1.3-.6l.9-2c.2-.5 0-1.1-.5-1.4C18.1 14 15 13.2 12 13.2zM12 3C7.5 3 3.4 5.1 1 8.6c-.3.5-.2 1.1.2 1.5l1.6 1.4c.4.4 1 .4 1.5.1C6.6 10 9.2 9.2 12 9.2s5.4.8 7.7 2.4c.5.3 1.1.3 1.5-.1l1.6-1.4c.4-.4.5-1 .2-1.5C20.6 5.1 16.5 3 12 3z" fill="currentColor" transform="rotate(135 12 12)"/></svg>
+              End call
+            </button>
+            <button class="replay-btn" id="replayBtn" type="button" hidden>&#8635; Play again</button>
+          </div>
         </div>
-        <div class="call-outcome">
-          <span class="outcome-chip">&#10003; Appointment booked — Today, 2:00–4:00 PM</span>
-          <span class="outcome-chip outcome-chip-alt">&#10003; Summary texted to owner</span>
-        </div>
+
         <p class="call-card-foot">Sample conversation. Yours is trained on your business, your services, your service area.</p>
       </div>
     </div>

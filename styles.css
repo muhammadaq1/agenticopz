@@ -43,6 +43,12 @@ body {
 
 ::selection { background: var(--accent); color: var(--white); }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 /* ---------- header ---------- */
 
 .site-header {
@@ -113,7 +119,7 @@ body {
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0); }
 
-.btn-accent { background: var(--accent); color: var(--white); }
+.btn-accent { background: var(--accent); color: var(--white); box-shadow: 0 12px 26px -12px rgba(255, 90, 31, 0.55); }
 .btn-accent:hover { background: var(--accent-dark); }
 
 .btn-dark { background: var(--ink); color: var(--white); }
@@ -159,7 +165,7 @@ h1, h2, h3 {
   color: var(--ink);
 }
 
-h1 { font-size: clamp(44px, 5.6vw, 74px); }
+h1 { font-size: clamp(46px, 5.9vw, 82px); }
 h1 em { font-style: normal; color: var(--accent); }
 
 h2 { font-size: clamp(34px, 4vw, 52px); }
@@ -189,7 +195,7 @@ h3 { font-size: 20px; font-weight: 700; }
   display: grid;
   grid-template-columns: 1.08fr 0.92fr;
   gap: 64px;
-  align-items: start;
+  align-items: center;
   padding-bottom: 84px;
 }
 
@@ -239,16 +245,31 @@ h3 { font-size: 20px; font-weight: 700; }
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.14em;
-  color: var(--accent-dark);
+  color: var(--ink-faint);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.pulse-dot {
+.call-card[data-state="connecting"] .call-status { color: #b97a12; }
+.call-card[data-state="live"] .call-status { color: var(--accent-dark); }
+
+.status-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
+  background: var(--ink-faint);
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.call-card[data-state="connecting"] .status-dot {
+  background: #e8a020;
+  animation: blink 0.7s ease-in-out infinite;
+}
+
+.call-card[data-state="live"] .status-dot {
   background: var(--accent);
   animation: pulse 1.6s ease-in-out infinite;
 }
@@ -256,6 +277,39 @@ h3 { font-size: 20px; font-weight: 700; }
 @keyframes pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 90, 31, 0.45); }
   50% { box-shadow: 0 0 0 6px rgba(255, 90, 31, 0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* equalizer — visible only while the call is live */
+.eq {
+  display: none;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 13px;
+  margin-left: 2px;
+}
+
+.call-card[data-state="live"] .eq { display: inline-flex; }
+
+.eq i {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  height: 40%;
+  animation: eq-bounce 0.9s ease-in-out infinite;
+}
+
+.eq i:nth-child(2) { animation-duration: 0.7s; animation-delay: 0.12s; }
+.eq i:nth-child(3) { animation-duration: 1.1s; animation-delay: 0.24s; }
+.eq i:nth-child(4) { animation-duration: 0.8s; animation-delay: 0.36s; }
+
+@keyframes eq-bounce {
+  0%, 100% { height: 30%; }
+  50% { height: 100%; }
 }
 
 .call-timer {
@@ -336,6 +390,206 @@ h3 { font-size: 20px; font-weight: 700; }
   color: var(--ink-faint);
   padding-top: 12px;
 }
+
+
+/* ---------- sample-call player stage ---------- */
+
+.call-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 10px 30px;
+}
+
+.play-btn {
+  position: relative;
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: var(--white);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 18px 36px -12px rgba(255, 90, 31, 0.55);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.play-btn:hover { transform: scale(1.06); background: var(--accent-dark); }
+.play-btn:active { transform: scale(0.97); }
+
+.play-btn .icon { width: 34px; height: 34px; position: relative; z-index: 2; }
+.play-btn .icon-play { margin-left: 4px; }
+.play-btn .icon-phone { display: none; }
+
+.call-card[data-state="connecting"] .play-btn {
+  background: var(--ink);
+  box-shadow: 0 18px 36px -14px rgba(20, 21, 15, 0.5);
+  transform: scale(1.02);
+}
+.call-card[data-state="connecting"] .icon-play { display: none; }
+.call-card[data-state="connecting"] .icon-phone {
+  display: block;
+  animation: ring-shake 0.9s ease-in-out infinite;
+}
+
+@keyframes ring-shake {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(10deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+  80% { transform: rotate(-4deg); }
+}
+
+.play-rings { position: absolute; inset: 0; pointer-events: none; }
+
+.play-rings i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 90, 31, 0.5);
+  animation: ring-expand 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+.play-rings i:nth-child(2) { animation-delay: 1.3s; }
+
+.call-card[data-state="connecting"] .play-rings i {
+  border-color: rgba(20, 21, 15, 0.35);
+  animation-duration: 1.1s;
+}
+.call-card[data-state="connecting"] .play-rings i:nth-child(2) { animation-delay: 0.55s; }
+
+@keyframes ring-expand {
+  0% { transform: scale(1); opacity: 0.9; }
+  70% { opacity: 0; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+
+.stage-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 26px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.stage-sub {
+  color: var(--ink-faint);
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin-top: 7px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.call-card[data-state="connecting"] .stage-title,
+.call-card[data-state="connecting"] .stage-sub {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.stage-connecting {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: -52px;
+  animation: fade-up 0.4s ease both;
+}
+
+.dial-dots i {
+  font-style: normal;
+  animation: blink 1.2s ease-in-out infinite;
+}
+.dial-dots i:nth-child(2) { animation-delay: 0.2s; }
+.dial-dots i:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* live transcript lines animate in one by one */
+.call-live { animation: fade-up 0.5s ease both; }
+
+.call-live .line {
+  opacity: 0;
+  transform: translateY(16px) scale(0.985);
+}
+
+.call-live .line.in {
+  animation: line-in 0.6s cubic-bezier(0.22, 1.25, 0.36, 1) forwards;
+}
+
+@keyframes line-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.call-live .call-outcome { opacity: 0; }
+
+.call-live .call-outcome.in { opacity: 1; }
+
+.call-live .call-outcome .outcome-chip {
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+}
+
+.call-live .call-outcome.in .outcome-chip {
+  animation: chip-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.call-live .call-outcome.in .outcome-chip:nth-child(2) { animation-delay: 0.14s; }
+
+@keyframes chip-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* call controls */
+.call-controls {
+  display: flex;
+  gap: 10px;
+  padding-top: 18px;
+}
+
+.end-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--white);
+  background: #c22e2e;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.end-btn:hover { background: #a82424; }
+.end-btn:active { transform: scale(0.97); }
+.end-btn svg { width: 15px; height: 15px; }
+
+.replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.replay-btn:hover { background: var(--ink); color: var(--white); }
 
 /* trade strip */
 
@@ -718,7 +972,14 @@ h3 { font-size: 20px; font-weight: 700; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .pulse-dot { animation: none; }
+  .status-dot, .eq i, .play-rings i, .dial-dots i,
+  .call-card[data-state="connecting"] .icon-phone { animation: none; }
+  .call-live, .call-live .line.in, .call-live .call-outcome.in .outcome-chip {
+    animation: none;
+  }
+  .call-live .line { transform: none; }
+  .call-live .line.in { opacity: 1; }
+  .call-live .call-outcome.in .outcome-chip { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
 
