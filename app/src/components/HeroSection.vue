@@ -21,9 +21,9 @@ const fadeUp = (delay) => ({
 
 <template>
   <section class="dot-grid border-b border-line">
-    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 pb-16 pt-14 sm:px-7 min-[961px]:grid-cols-[1.08fr_0.92fr] min-[961px]:gap-16">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-10 px-5 pb-12 pt-10 sm:px-7 min-[961px]:grid-cols-[1.08fr_0.92fr] min-[961px]:gap-16">
       <div>
-        <motion.p v-bind="fadeUp(0)" class="mb-[26px]">
+        <motion.p v-bind="fadeUp(0)" class="mb-5">
           <span class="inline-flex items-center gap-2.5 rounded-full border border-ink/10 bg-cream/80 py-1.5 pl-3 pr-4 font-mono text-[11.5px] font-medium uppercase tracking-[0.18em] text-ink-soft shadow-[0_1px_2px_rgba(20,21,15,0.05)]">
             <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>AI Front Desk
           </span>
@@ -31,10 +31,10 @@ const fadeUp = (delay) => ({
         <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(34px,3.4vw,50px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
           Your phone rings once.<br><em class="not-italic text-accent">The job gets booked.</em>
         </motion.h1>
-        <motion.p v-bind="fadeUp(0.16)" class="mt-6 max-w-[520px] text-[17.5px] leading-[1.6] text-ink-soft">
-          An AI receptionist for HVAC, plumbing, roofing and electrical shops. It answers on the first ring — nights, weekends, mid-job — books the work into your calendar, and texts you the details.
+        <motion.p v-bind="fadeUp(0.16)" class="mt-5 max-w-[500px] text-[17px] leading-[1.55] text-ink-soft">
+          The AI front desk for HVAC, plumbing, roofing and electrical shops — answers on the first ring, books the job, and texts you the details. 24/7.
         </motion.p>
-        <motion.div v-bind="fadeUp(0.24)" class="mt-[38px] flex flex-wrap gap-[14px]">
+        <motion.div v-bind="fadeUp(0.24)" class="mt-7 flex flex-wrap gap-[14px]">
           <motion.a
             href="#audit"
             class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-[15px] text-base font-semibold text-cream no-underline shadow-[0_12px_26px_-12px_rgba(255,90,31,0.55)] transition-colors hover:bg-accent-dark"
@@ -51,7 +51,7 @@ const fadeUp = (delay) => ({
             @click="hearSample"
           >Hear a sample call</motion.a>
         </motion.div>
-        <motion.p v-bind="fadeUp(0.32)" class="mt-5 max-w-[460px] text-[14.5px] text-ink-faint">
+        <motion.p v-bind="fadeUp(0.32)" class="mt-4 max-w-[460px] text-[14.5px] text-ink-faint">
           Free audit: we test-call your business and show you exactly what your callers experience today.
         </motion.p>
       </div>
