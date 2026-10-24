@@ -28,8 +28,8 @@ const fadeUp = (delay) => ({
             <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>AI Front Desk
           </span>
         </motion.p>
-        <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(42px,4.4vw,66px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
-          Every call answered.<br><em class="not-italic text-accent">Every job booked.</em>
+        <motion.h1 v-bind="fadeUp(0.08)" class="font-display text-[clamp(34px,3.4vw,50px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">
+          Your phone rings once.<br><em class="not-italic text-accent">The job gets booked.</em>
         </motion.h1>
         <motion.p v-bind="fadeUp(0.16)" class="mt-6 max-w-[520px] text-[17.5px] leading-[1.6] text-ink-soft">
           An AI receptionist for HVAC, plumbing, roofing and electrical shops. It answers on the first ring — nights, weekends, mid-job — books the work into your calendar, and texts you the details.
