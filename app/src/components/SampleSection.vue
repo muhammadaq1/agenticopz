@@ -17,36 +17,47 @@ const lines = [
 </script>
 
 <template>
-  <section id="sample" class="py-[76px] min-[961px]:py-[110px]">
-    <div class="mx-auto max-w-[1180px] px-5 sm:px-7">
+  <section id="sample" class="relative overflow-hidden border-t border-line py-[76px] min-[961px]:py-[110px]">
+    <span aria-hidden="true" class="pointer-events-none absolute -top-8 right-2 select-none font-display text-[200px] font-extrabold leading-none text-ink/[0.05] min-[961px]:text-[260px]">03</span>
+    <div class="relative mx-auto max-w-[1180px] px-5 sm:px-7">
       <div class="grid grid-cols-1 items-start gap-12 min-[961px]:grid-cols-2 min-[961px]:gap-[70px]">
         <Reveal>
           <div>
             <div class="mb-[54px]">
               <p class="mb-5 flex items-center gap-3 font-mono text-[12.5px] font-medium uppercase tracking-[0.18em] text-ink-faint">03 — Sample call</p>
-              <h2 class="font-display text-[clamp(34px,4vw,52px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">It doesn’t sound like a robot.<br>It sounds like your best CSR.</h2>
+              <h2 class="font-display text-[clamp(34px,4vw,52px)] font-extrabold leading-[1.04] tracking-[-0.015em] text-ink">It doesn’t sound like a robot.<br>It sounds like your <em class="not-italic text-accent">best CSR.</em></h2>
             </div>
             <p class="mb-[30px] text-lg text-ink-soft">Callers want one thing: to feel heard and get booked. The AI listens, asks the questions your team would ask, and never puts anyone on hold. If a caller asks for a human, or the situation is sensitive, the call is transferred to you or your on-call — instantly.</p>
             <ul class="list-none">
-              <li v-for="p in points" :key="p.strong" class="border-t border-line py-[18px] text-[16.5px] text-ink-soft last:border-b">
-                <strong class="text-ink">{{ p.strong }}</strong>{{ p.text }}
+              <li v-for="p in points" :key="p.strong" class="flex gap-3 border-t border-line py-[18px] text-[16.5px] text-ink-soft last:border-b">
+                <span class="shrink-0 font-bold text-accent-dark">&#10003;</span>
+                <span><strong class="text-ink">{{ p.strong }}</strong>{{ p.text }}</span>
               </li>
             </ul>
           </div>
         </Reveal>
         <Reveal :delay="0.1">
-          <div class="rounded-[18px] border border-line bg-cream p-5 shadow-[0_24px_60px_-30px_rgba(20,21,15,0.25)] sm:p-[26px]">
-            <p class="border-b border-line pb-4 font-mono text-[12.5px] uppercase tracking-[0.12em] text-ink-faint">Sample call — water heater, Saturday 9:41 PM</p>
+          <div class="rounded-[20px] bg-[linear-gradient(140deg,#171812,#23241a)] p-5 text-cream shadow-[0_30px_70px_-28px_rgba(20,21,15,0.55)] ring-1 ring-white/10 sm:p-6">
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+              <span class="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.14em] text-white/75">
+                <span class="h-2 w-2 rounded-full bg-accent"></span>Live transcript
+              </span>
+              <span class="font-mono text-[12px] text-white/45">Saturday · 9:41 PM</span>
+            </div>
             <div class="flex flex-col gap-[14px] pb-[6px] pt-[18px]">
               <div v-for="(line, i) in lines" :key="i" class="flex gap-3 text-[15px] leading-[1.55]">
                 <span
                   class="mt-[2px] h-fit shrink-0 rounded-[5px] px-[7px] py-[3px] font-mono text-[10.5px] font-medium tracking-[0.1em]"
-                  :class="line.who === 'ai' ? 'bg-ink text-cream' : 'border border-line bg-paper-2 text-ink-soft'"
+                  :class="line.who === 'ai' ? 'bg-accent text-cream' : 'border border-white/20 text-white/70'"
                 >{{ line.who === 'ai' ? 'AI' : 'CALLER' }}</span>
-                <p :class="line.who === 'caller' ? 'text-ink-soft' : ''">{{ line.text }}</p>
+                <p :class="line.who === 'caller' ? 'text-white/65' : ''">{{ line.text }}</p>
               </div>
             </div>
-            <p class="pt-3 text-[12.5px] text-ink-faint">Sample conversation, written from real call patterns in the trades.</p>
+            <div class="mt-2 flex flex-wrap gap-2 border-t border-white/10 pt-4">
+              <span class="rounded-full border border-white/15 bg-white/5 px-3 py-[5px] text-[13px] font-semibold text-white/85">&#10003; Emergency flagged</span>
+              <span class="rounded-full border border-white/15 bg-white/5 px-3 py-[5px] text-[13px] font-semibold text-white/85">&#10003; On-call plumber alerted</span>
+            </div>
+            <p class="pt-3 text-[12.5px] text-white/45">Sample conversation, written from real call patterns in the trades.</p>
           </div>
         </Reveal>
       </div>
